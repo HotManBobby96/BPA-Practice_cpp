@@ -1,21 +1,16 @@
-// including things
+// MEMBER ID (we did that last year at national gang)
+// including libraires 
 #include <iostream>
 #include <cmath>
 #include <string>
 #include <vector>
 #include <algorithm>
 
-// 00075707 (we did that last year at national gang)
-
-
 // namespaces
 using namespace std;
 
 
 // functions 
-
-
-
 string normalizeString(string userInput) {
 
 	// checking every sysmbol on the keyboard
@@ -78,7 +73,8 @@ int main()
 
 	size_t length = normalizedString.length(); // gets the length for math when calcualting the box
 
-		
+	
+	// I couldve done this much easier dawg
 	int columns = static_cast<int>(ceil(sqrt(static_cast<double>(length))));  // calculates the columns by taking the square root of the length and rounding up
 	int rows = static_cast<int>(ceil(static_cast<double>(length) / columns)); // calculates the rows by taking the length and dividing it by the columns and rounding up
 
