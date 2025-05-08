@@ -1,0 +1,87 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <ctype.h>
+
+class BowlingGame {
+private:
+    // Carries all scores for all balls of a sequence.
+    std::vector<int> ballScoreSequence;
+public:
+    // CONSTRUCTOR
+    BowlingGame(std::vector<int> scoreSequence) {
+        this->ballScoreSequence = scoreSequence;
+    }
+    int calculateScore() {
+        int finalScore = 0;
+        // If strike on the first ball of the first frame.
+        for (int i = 0; i < ballScoreSequence.size(); i++) {
+            if ((i == 0) && (ballScoreSequence[0] == 10)) {
+                finalScore += ballScoreSequence[1];
+                finalScore += ballScoreSequence[2];
+                finalScore += 10;
+                continue;
+            }
+            finalScore += ballScoreSequence[i];
+        }
+        return finalScore;
+    }
+};
+
+int main() {
+    // Application Header
+    std::cout << "Bowling Score Calculator" << std::endl;
+
+    // Opens desired Bowling.txt file.
+    std::ifstream file;
+    file.open("C:\\Users\\PCHS_BPA\\Desktop\\bowlingScoreCalculator\\Bowling.txt");
+
+    // ERROR HANDLING
+    if (!file.good()) {
+        std::cerr << "Error opening file." << std::endl;
+        return -1;
+    }
+
+    // MAIN COMPUTATIONS/HANDLING
+    // Each line of the text file (each "game")
+    std::vector<BowlingGame> games;
+    // Each ball score
+    std::vector<int> gameSequence;
+    std::string line;
+    int counter = 0;
+    std::string temp;
+
+    // "For every line of the text file-"
+    while (std::getline(file, line)) {
+        // Takes each score and places it into a vector without commas as an integer value.
+        gameSequence.clear(); // clearing this sort of adds better FIX
+        for (int i = 0; i < line.size(); i++) {
+            if (line[i] == ',') {
+                gameSequence.push_back(std::stoi(temp));
+                temp = "";
+                continue;
+            }
+            else {
+                temp += line[i];
+            }
+        }
+        // Adds score to current game.
+        gameSequence.push_back(std::stoi(temp));
+        // Adds another game to your list of games.
+        games.emplace_back(gameSequence);
+
+    }
+    // Closes stream to previously established file.
+    file.close();
+
+    // OUTPUT
+    // Lazy way to avoid creating another nested for-loop. (Easier reading)
+    int counter2 = 0; // inilizaed this FIX
+    for (BowlingGame game : games) {
+        counter2++;
+        std::cout << "Game " << counter2 << " Final Score: " << game.calculateScore() << std::endl;
+    }
+
+    return 0;
+}
